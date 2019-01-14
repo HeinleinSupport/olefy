@@ -39,6 +39,7 @@ Python3 >= 3.4 is required for olefy
 -   clone or download this repo
 -   edit olefy.conf to fit your needs
 -   copy olefy.py daemon file to /usr/local/bin
+-   copy olefy.conf to /etc
 -   copy the systemd service file olefy.service to /etc/systemd/system
 -   enable and unmask the Service
 ~~~
