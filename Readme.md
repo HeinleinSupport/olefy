@@ -20,6 +20,7 @@ Also olefy should rescan with rtfobj when olevba reports a RTF file.
 ## oletools
 
 [github: oletools - python tools to analyze MS OLE2 files](https://github.com/decalage2/oletools)
+
 [http://www.decalage.info/python/oletools](http://www.decalage.info/python/oletools)
 
 oletools is a package of python tools to analyze Microsoft OLE2 files (also called Structured Storage, Compound File Binary Format or Compound Document File Format), such as Microsoft Office documents or Outlook messages, mainly for malware analysis, forensics and debugging. It is based on the olefile parser. See [http://www.decalage.info/python/oletools](http://www.decalage.info/python/oletools) for more info.
