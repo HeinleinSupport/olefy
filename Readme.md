@@ -1,6 +1,6 @@
 # olefy - oletools verify over TCP socket
 
-Small Python Daemon to use oletools over TCP sockets. Mainly to use oletools in Rspamd.
+Small Python Daemon to use oletools over TCP sockets. Mainly to use oletools in [Rspamd](https://github.com/rspamd/rspamd).
 
 ## State of Development
 
