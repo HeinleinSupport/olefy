@@ -31,13 +31,12 @@ Python3 >= 3.4 is required for olefy
 
 ## Install Python3 oletools and python-magic
 
--   use pip3, apt, yum, zypper or the source to install the oletools, python-magic
-    and their requirements on your system
+-   use pip3, apt, yum, zypper or the source to install the Python3 version of oletools, python-magic and their requirements on your system
 
 ## Install olefy
 
 -   clone or download this repo
--   (maybe add a user for olefy)
+-   (maybe add the user olefy or edit olefy.service)
 -   edit olefy.conf to fit your needs
 -   copy olefy.py daemon file to /usr/local/bin
 -   copy olefy.conf to /etc
