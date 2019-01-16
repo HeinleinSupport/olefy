@@ -17,6 +17,9 @@ the stream into a tmp file, calls olevba3 and returns the scan result as json.
 Debug some issues and use oletools directly in olefy and scan inline.
 Also olefy should rescan with rtfobj when olevba reports a RTF file.
 
+As the protocol is flexible we will integrate other tools and services as needed.
+(Pyzor will be next)
+
 ## oletools
 
 [github: oletools - python tools to analyze MS OLE2 files](https://github.com/decalage2/oletools)
@@ -25,7 +28,7 @@ Also olefy should rescan with rtfobj when olevba reports a RTF file.
 
 oletools is a package of python tools to analyze Microsoft OLE2 files (also called Structured Storage, Compound File Binary Format or Compound Document File Format), such as Microsoft Office documents or Outlook messages, mainly for malware analysis, forensics and debugging. It is based on the olefile parser. See [http://www.decalage.info/python/oletools](http://www.decalage.info/python/oletools) for more info.
 
-# Installation
+# Default Installation
 
 Python3 >= 3.4 is required for olefy
 
@@ -38,9 +41,9 @@ Python3 >= 3.4 is required for olefy
 -   clone or download this repo
 -   (maybe add the user olefy or edit olefy.service)
 -   edit olefy.conf to fit your needs
+    --> the paths fit for Debian style systems and maybe not yours
 -   copy olefy.py daemon file to /usr/local/bin
 -   copy olefy.conf to /etc
--   create tmp directory as configured in olefy.conf
 -   copy the systemd service file olefy.service to /etc/systemd/system
 -   enable and unmask the Service
 ~~~
@@ -48,6 +51,16 @@ systemctl daemon-reload
 systemctl unmask olefy.service
 systemctl enable olefy.service
 ~~~
+
+# Extended Installation
+
+Only olefy depends on Python3 because we are using AsyncIO. If you like you can use the Python2 version, even the git version of oletools or a non-default python version. You only have to adjust the config.
+
+Also you could start olefy.py standalone. Just edit the file directly and start it using the python3 interpreter
+
+# Settings
+
+Have a look to the commented olefy.conf. Set olefy_loglvl to 10 to see all details including the Rspamd scanning id.
 
 # License
 
