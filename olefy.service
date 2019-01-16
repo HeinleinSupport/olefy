@@ -1,0 +1,32 @@
+[Unit]
+Description=olefy Socket Service
+Requires=network.target local-fs.target time-sync.target
+
+[Service]
+Type=simple
+User=olefy
+Group=olefy
+
+EnvironmentFile=/etc/olefy.conf
+ExecStart=/usr/bin/python3 /usr/local/bin/olefy.py
+ExecReload=/bin/kill -HUP $MAINPID
+
+PIDFile=/var/run/olefy.pid
+TimeoutStopSec=30
+
+Restart=always
+RestartSec=3
+RuntimeMaxSec=4h
+
+NoNewPrivileges=true
+PrivateDevices=true
+PrivateTmp=true
+PrivateUsers=true
+ProtectControlGroups=true
+ProtectHome=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectSystem=strict
+
+[Install]
+WantedBy=multi-user.target
