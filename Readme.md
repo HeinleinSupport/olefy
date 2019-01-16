@@ -1,6 +1,6 @@
 # olefy - oletools verify over TCP socket
 
-Small Python Daemon to use oletools over TCP sockets. Mainly to use oletools in Rspamd.
+Small Python Daemon to use oletools over TCP sockets. Mainly to use oletools in [Rspamd](https://github.com/rspamd/rspamd).
 
 ## State of Development
 
@@ -20,6 +20,7 @@ Also olefy should rescan with rtfobj when olevba reports a RTF file.
 ## oletools
 
 [github: oletools - python tools to analyze MS OLE2 files](https://github.com/decalage2/oletools)
+
 [http://www.decalage.info/python/oletools](http://www.decalage.info/python/oletools)
 
 oletools is a package of python tools to analyze Microsoft OLE2 files (also called Structured Storage, Compound File Binary Format or Compound Document File Format), such as Microsoft Office documents or Outlook messages, mainly for malware analysis, forensics and debugging. It is based on the olefile parser. See [http://www.decalage.info/python/oletools](http://www.decalage.info/python/oletools) for more info.
@@ -30,14 +31,16 @@ Python3 >= 3.4 is required for olefy
 
 ## Install Python3 oletools and python-magic
 
--   use pip3, apt, yum, zypper or the source to install the oletools, python-magic
-    and their requirements on your system
+-   use pip3, apt, yum, zypper or the source to install the Python3 version of oletools, python-magic and their requirements on your system
 
 ## Install olefy
 
 -   clone or download this repo
+-   (maybe add the user olefy or edit olefy.service)
 -   edit olefy.conf to fit your needs
 -   copy olefy.py daemon file to /usr/local/bin
+-   copy olefy.conf to /etc
+-   create tmp directory as configured in olefy.conf
 -   copy the systemd service file olefy.service to /etc/systemd/system
 -   enable and unmask the Service
 ~~~
