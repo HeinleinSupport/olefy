@@ -56,7 +56,7 @@ systemctl enable olefy.service
 
 Only olefy depends on Python3 because we are using AsyncIO. If you like you can use the Python2 version, even the git version of oletools or a non-default python version. You only have to adjust the config.
 
-Also you could start olefy.py standalone. Just edit the file directly and start it using the python3 interpreter
+Also you could start olefy.py standalone. Just edit the file directly and start it using the python3 interpreter.
 
 # Settings
 
@@ -68,13 +68,16 @@ Apache-2.0
 
 # Author Information
 
+*   **[Dennis Kalbhen](mailto:d.kalbhen@heinlein-support.de)** - [d-kalbhen](https://github.com/d-kalbhen)
+*   **[Carsten Rosenberg](mailto:c.rosenberg@heinlein-support.de)** - [c-rosenberg](https://github.com/c-rosenberg)
+
 ~~~
 Heinlein Support GmbH
 Schwedter Str. 8/9b, 10119 Berlin
 
 https://www.heinlein-support.de
 
-Tel: 030 / 405051-10
+Tel: +4930 / 405051-110
 
 Amtsgericht Berlin-Charlottenburg - HRB 93818 B
 Geschäftsführer: Peer Heinlein - Sitz: Berlin
