@@ -68,7 +68,7 @@ Apache-2.0
 
 # Author Information
 
-*   **[Dennis Kalbhen](mailto:d.kalbhen@heinlein-support.de)** - [d-kalbhen](https://github.com/d-kalbhen)
+*   **[Dennis Kalbhen](mailto:d.kalbhen@heinlein-support.de)** - [d-kalbhen](https://github.com/dns-kbn)
 *   **[Carsten Rosenberg](mailto:c.rosenberg@heinlein-support.de)** - [c-rosenberg](https://github.com/c-rosenberg)
 
 ~~~
