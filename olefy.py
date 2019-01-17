@@ -40,7 +40,7 @@ olefy_olevba_path = os.getenv('OLEFY_OLEVBA_PATH', '/usr/local/bin/olevba3')
 # 10:DEBUG, 20:INFO, 30:WARNING, 40:ERROR, 50:CRITICAL
 olefy_loglvl = int(os.getenv('OLEFY_LOGLVL', 20))
 olefy_min_length = int(os.getenv('OLEFY_MINLENGTH', 500))
-olefy_del_tmp = int(os.getenv('OLEFY_DEL_TMP', 0))
+olefy_del_tmp = int(os.getenv('OLEFY_DEL_TMP', 1))
 
 # internal used variables
 request_time = '0000000000.000000'
