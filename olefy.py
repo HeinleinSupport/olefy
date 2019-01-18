@@ -77,8 +77,8 @@ def protocol_split( olefy_line ):
 # calling oletools
 def oletools( stream, tmp_file_name, lid ):
     if olefy_min_length > stream.__len__():
-        logger.error('{} {} bytes (Not Scanning! Too smaller than {!r})'.format(lid, self.extra.__len__(), olefy_min_length))
-        out = b'[ { "error": "File too small." } ]'
+        logger.error('{} {} bytes (Not Scanning! File smaller than {!r})'.format(lid, stream.__len__(), olefy_min_length))
+        out = b'[ { "error": "File too small" } ]'
     else:
         tmp_file = open(tmp_file_name, 'wb')
         tmp_file.write(stream)
@@ -104,8 +104,8 @@ def oletools( stream, tmp_file_name, lid ):
             logger.debug('{} {} deleting tmp file'.format(lid, tmp_file_name))
             os.remove(tmp_file_name)
 
-        logger.debug('{} resonse: {}'.format(lid, out.decode()))
-        return out
+    logger.debug('{} resonse: {}'.format(lid, out.decode()))
+    return out
 
 # Asyncio data handling, default AIO-Functions
 class AIO(asyncio.Protocol):
