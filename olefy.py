@@ -146,8 +146,12 @@ class AIO(asyncio.Protocol):
         if olefy_protocol_err == True or olefy_headers['olefy'] != 'OLEFY/1.0':
             logger.error('Protocol ERROR: no OLEFY/1.0 found)')
             out = b'[ { "error": "Protocol error" } ]'
-        elif olefy_headers['Method'] == 'oletools':
-            out = oletools(self.extra, tmp_file_name, lid)
+        elif 'Method' in olefy_headers:
+            if olefy_headers['Method'] == 'oletools':
+                out = oletools(self.extra, tmp_file_name, lid)
+        else:
+            logger.error('Protocol ERROR: Method header not found')
+            out = b'[ { "error": "Protocol error: Method header not found" } ]'
 
         self.transport.write(out)
         logger.info('{} response send: {!r}'.format(peer, out))
