@@ -122,7 +122,6 @@ class AIO(asyncio.Protocol):
     def data_received(self, request, msgid=1):
         peer = self.transport.get_extra_info('peername')
         logger.debug('{} data received from new connection'.format(peer))
-        # logger.debug('{} data: {!r}'.format(peer, request))
         self.extra.extend(request)
 
     def eof_received(self):
@@ -130,8 +129,8 @@ class AIO(asyncio.Protocol):
         olefy_protocol_err = False
         proto_ck = str(self.extra[0:2000])
         if olefy_protocol in proto_ck:
-            olefy_line = proto_ck[proto_ck.find('\'')+1:proto_ck.find(olefy_protocol_sep)]
-            self.extra = bytearray(self.extra[len(olefy_line):len(self.extra)])
+            olefy_line = proto_ck[12:proto_ck.find(olefy_protocol_sep)]
+            self.extra = bytearray(self.extra[59:len(self.extra)])
             protocol_split(olefy_line)
         else:
             olefy_protocol_err = True
