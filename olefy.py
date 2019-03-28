@@ -33,7 +33,7 @@ import magic
 
 # merge variables from /etc/olefy.conf and the defaults
 olefy_listen_addr = os.getenv('OLEFY_BINDADDRESS', '127.0.0.1')
-olefy_listen_port = os.getenv('OLEFY_BINDPORT', '10050')
+olefy_listen_port = int(os.getenv('OLEFY_BINDPORT', '10050'))
 olefy_tmp_dir = os.getenv('OLEFY_TMPDIR', '/tmp')
 olefy_python_path = os.getenv('OLEFY_PYTHON_PATH', '/usr/bin/python3')
 olefy_olevba_path = os.getenv('OLEFY_OLEVBA_PATH', '/usr/local/bin/olevba3')
@@ -61,6 +61,13 @@ logger.info('olefy olvba path: {}'.format(olefy_olevba_path))
 logger.info('olefy log level: {}'.format(olefy_loglvl))
 logger.info('olefy min file length: {}'.format(olefy_min_length))
 logger.info('olefy delete tmp file: {}'.format(olefy_del_tmp))
+
+if not os.path.isfile(olefy_python_path):
+    logger.critical('python path not found: {}'.format(olefy_python_path))
+    exit(1)
+if not os.path.isfile(olefy_olevba_path):
+    logger.critical('olevba path not found: {}'.format(olefy_olevba_path))
+    exit(1)
 
 # olefy protocol function
 def protocol_split( olefy_line ):

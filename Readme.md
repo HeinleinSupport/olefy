@@ -42,7 +42,7 @@ Python3 >= 3.4 is required for olefy
 -   clone or download this repo
 -   (maybe add the user olefy or edit olefy.service)
 -   edit olefy.conf to fit your needs
-    --> the paths fit for Debian style systems and maybe not yours
+    --> **The paths fit for Debian style systems and maybe not yours**
 -   copy olefy.py daemon file to /usr/local/bin
 -   copy olefy.conf to /etc
 -   copy the systemd service file olefy.service to /etc/systemd/system
@@ -61,7 +61,11 @@ Also you could start olefy.py standalone. Just edit the file directly and start 
 
 # Settings
 
-Have a look to the commented olefy.conf. Set olefy_loglvl to 10 to see all details including the Rspamd scanning id.
+Have a look to the commented olefy.conf. Set OLEFY_LOGLVL to 10 to see all details including the Rspamd scanning id.
+
+# Debugging
+
+Set `OLEFY_LOGLVL=10` and have a look to the logs `journalctl -u olefy`
 
 # License
 
