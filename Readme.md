@@ -40,7 +40,7 @@ Python3 >= 3.4 is required for olefy
 ## Install olefy
 
 -   clone or download this repo
--   (maybe add the user olefy or edit olefy.service)
+-   **add the user and group olefy** or edit olefy.service to use any other existing user/group
 -   edit olefy.conf to fit your needs
     --> **The paths fit for Debian style systems and maybe not yours**
 -   copy olefy.py daemon file to /usr/local/bin
