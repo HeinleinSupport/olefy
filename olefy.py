@@ -111,7 +111,7 @@ def oletools( stream, tmp_file_name, lid ):
             logger.debug('{} {} deleting tmp file'.format(lid, tmp_file_name))
             os.remove(tmp_file_name)
 
-    logger.debug('{} resonse: {}'.format(lid, out.decode()))
+    logger.debug('{} response: {}'.format(lid, out.decode()))
     return out
 
 # Asyncio data handling, default AIO-Functions

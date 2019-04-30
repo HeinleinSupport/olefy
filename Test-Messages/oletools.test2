@@ -1,0 +1,29 @@
+To: Test <test@example.com>
+From: Test <test@example.com>
+Subject: Oletools test message #2
+Message-ID: <da7822b4-cadd-5e09-78ad-d09ed22119e2@example.com>
+Date: Tue, 30 Apr 2019 16:45:33 +0200
+
+MIME-Version: 1.0
+Content-Type: multipart/mixed;
+ boundary="------------9039EA739A22943FBDA745F9"
+Content-Language: en-US
+
+
+This is a multi-part message in MIME format.
+--------------9039EA739A22943FBDA745F9
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+Rspamd test message.
+
+--------------9039EA739A22943FBDA745F9
+Content-Type: text/plain; charset=UTF-8;
+ name="rspamd.txt"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename="rspamd.txt"
+
+UnNwYW1kIHRlc3QgZmlsZS4K
+--------------9039EA739A22943FBDA745F9--
+
