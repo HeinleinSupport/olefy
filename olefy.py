@@ -98,7 +98,7 @@ def oletools( stream, tmp_file_name, lid ):
         logger.info('{} {} (libmagic output)'.format(lid, file_mime))
 
         # do the olefy
-        cmd_tmp = Popen([olefy_python_path, olefy_olevba_path, '-a', '-j', tmp_file_name], stdout=PIPE, stderr=PIPE)
+        cmd_tmp = Popen([olefy_python_path, olefy_olevba_path, '-a', '-j' , '-l', 'error', tmp_file_name], stdout=PIPE, stderr=PIPE)
         out, err = cmd_tmp.communicate()
         if out.__len__() < 10:
             logger.error('{} olevba returned <10 chars - rc: {!r}, response: {!r}'.format(lid,cmd_tmp.returncode, out.decode('ascii')))
