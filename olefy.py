@@ -41,6 +41,7 @@ olefy_olevba_path = os.getenv('OLEFY_OLEVBA_PATH', '/usr/local/bin/olevba3')
 olefy_loglvl = int(os.getenv('OLEFY_LOGLVL', 20))
 olefy_min_length = int(os.getenv('OLEFY_MINLENGTH', 500))
 olefy_del_tmp = int(os.getenv('OLEFY_DEL_TMP', 1))
+olefy_del_tmp_failed = int(os.getenv('OLEFY_DEL_TMP_FAILED', 1))
 
 # internal used variables
 request_time = '0000000000.000000'
@@ -61,6 +62,7 @@ logger.info('olefy olvba path: {}'.format(olefy_olevba_path))
 logger.info('olefy log level: {}'.format(olefy_loglvl))
 logger.info('olefy min file length: {}'.format(olefy_min_length))
 logger.info('olefy delete tmp file: {}'.format(olefy_del_tmp))
+logger.info('olefy delete tmp file when failed: {}'.format(olefy_del_tmp_failed))
 
 if not os.path.isfile(olefy_python_path):
     logger.critical('python path not found: {}'.format(olefy_python_path))
@@ -101,13 +103,16 @@ def oletools( stream, tmp_file_name, lid ):
         if out.__len__() < 10:
             logger.error('{} olevba returned <10 chars - rc: {!r}, response: {!r}'.format(lid,cmd_tmp.returncode, out.decode('ascii')))
             out = b'[ { "error": "Unhandled oletools response" } ]'
+            failed = TRUE
         if err.__len__() > 10:
             logger.error('{} olevba stderr >10 chars - rc: {!r}, response: {!r}'.format(lid, cmd_tmp.returncode, err.decode('ascii')))
             out = b'[ { "error": "Unhandled oletools error" } ]'
+            failed = TRUE
         if cmd_tmp.returncode != 0:
             logger.error('{} olevba exited with code {!r}; err: {!r}'.format(lid, cmd_tmp.returncode, err.decode('ascii')))
+            failed = TRUE
 
-        if olefy_del_tmp == 1:
+        if olefy_del_tmp == 1 or (failed and olefy_del_tmp_failed == 1):
             logger.debug('{} {} deleting tmp file'.format(lid, tmp_file_name))
             os.remove(tmp_file_name)
 
