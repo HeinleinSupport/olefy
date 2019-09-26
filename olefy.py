@@ -165,6 +165,7 @@ class AIO(asyncio.Protocol):
             out = b'[ { "error": "Protocol error: Method header not found" } ]'
 
         self.transport.write(out)
+        self.transport.write(b'\t\n\n\t')
         logger.info('{} response send: {!r}'.format(peer, out))
         self.transport.close()
 
