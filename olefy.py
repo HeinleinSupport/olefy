@@ -100,17 +100,19 @@ def oletools( stream, tmp_file_name, lid ):
         # do the olefy
         cmd_tmp = Popen([olefy_python_path, olefy_olevba_path, '-a', '-j' , '-l', 'error', tmp_file_name], stdout=PIPE, stderr=PIPE)
         out, err = cmd_tmp.communicate()
+        out = bytes(out.decode("ascii").replace('  ', ' ').replace('\t', '').replace('\n', ''), encoding="ascii")
+        failed = False
         if out.__len__() < 10:
             logger.error('{} olevba returned <10 chars - rc: {!r}, response: {!r}'.format(lid,cmd_tmp.returncode, out.decode('ascii')))
             out = b'[ { "error": "Unhandled oletools response" } ]'
-            failed = TRUE
+            failed = True
         if err.__len__() > 10:
             logger.error('{} olevba stderr >10 chars - rc: {!r}, response: {!r}'.format(lid, cmd_tmp.returncode, err.decode('ascii')))
             out = b'[ { "error": "Unhandled oletools error" } ]'
-            failed = TRUE
+            failed = True
         if cmd_tmp.returncode != 0:
             logger.error('{} olevba exited with code {!r}; err: {!r}'.format(lid, cmd_tmp.returncode, err.decode('ascii')))
-            failed = TRUE
+            failed = True
 
         if olefy_del_tmp == 1 or (failed and olefy_del_tmp_failed == 1):
             logger.debug('{} {} deleting tmp file'.format(lid, tmp_file_name))
