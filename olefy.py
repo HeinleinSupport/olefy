@@ -102,19 +102,21 @@ def oletools( stream, tmp_file_name, lid ):
         out, err = cmd_tmp.communicate()
         out = bytes(out.decode("ascii").replace('  ', ' ').replace('\t', '').replace('\n', ''), encoding="ascii")
         failed = False
-        if out.__len__() < 10:
+        if out.__len__() < 30:
             logger.error('{} olevba returned <10 chars - rc: {!r}, response: {!r}'.format(lid,cmd_tmp.returncode, out.decode('ascii')))
-            out = b'[ { "error": "Unhandled oletools response" } ]'
+            out = b'[ { "error": "Unhandled error - too short olevba response" } ]'
             failed = True
-        if err.__len__() > 10:
+        elif err.__len__() > 10 and cmd_tmp.returncode > 9:
             logger.error('{} olevba stderr >10 chars - rc: {!r}, response: {!r}'.format(lid, cmd_tmp.returncode, err.decode('ascii')))
             out = b'[ { "error": "Unhandled oletools error" } ]'
             failed = True
-        if cmd_tmp.returncode != 0:
+        elif cmd_tmp.returncode != 0:
             logger.error('{} olevba exited with code {!r}; err: {!r}'.format(lid, cmd_tmp.returncode, err.decode('ascii')))
             failed = True
 
-        if olefy_del_tmp == 1 or (failed and olefy_del_tmp_failed == 1):
+        if failed and olefy_del_tmp_failed == 0:
+            logger.debug('{} {} FAILED: not deleting tmp file'.format(lid, tmp_file_name))
+        elif olefy_del_tmp == 1:
             logger.debug('{} {} deleting tmp file'.format(lid, tmp_file_name))
             os.remove(tmp_file_name)
 
@@ -157,7 +159,7 @@ class AIO(asyncio.Protocol):
         logger.info('{} {} bytes (stream size)'.format(lid, self.extra.__len__()))
 
         if olefy_protocol_err == True or olefy_headers['olefy'] != 'OLEFY/1.0':
-            logger.error('Protocol ERROR: no OLEFY/1.0 found)')
+            logger.error('{} Protocol ERROR: no OLEFY/1.0 found'.format(lid))
             out = b'[ { "error": "Protocol error" } ]'
         elif 'Method' in olefy_headers:
             if olefy_headers['Method'] == 'oletools':
@@ -168,7 +170,7 @@ class AIO(asyncio.Protocol):
 
         self.transport.write(out)
         self.transport.write(b'\t\n\n\t')
-        logger.info('{} response send: {!r}'.format(peer, out))
+        logger.info('{} {} response send: {!r}'.format(lid, peer, out))
         self.transport.close()
 
 
