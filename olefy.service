@@ -11,7 +11,7 @@ EnvironmentFile=/etc/olefy.conf
 ExecStart=/usr/bin/python3 /usr/local/bin/olefy.py
 ExecReload=/bin/kill -HUP $MAINPID
 
-PIDFile=/var/run/olefy.pid
+PIDFile=/run/olefy.pid
 TimeoutStopSec=30
 
 Restart=always
