@@ -46,7 +46,7 @@ olefy_del_tmp_failed = int(os.getenv('OLEFY_DEL_TMP_FAILED', 1))
 # internal used variables
 request_time = '0000000000.000000'
 olefy_protocol = 'OLEFY'
-olefy_protocol_sep = '\\n\\n'
+olefy_protocol_sep = '\n\n'
 olefy_headers = {}
 
 # init logging
@@ -73,7 +73,7 @@ if not os.path.isfile(olefy_olevba_path):
 
 # olefy protocol function
 def protocol_split( olefy_line ):
-    header_lines = olefy_line.split('\\n')
+    header_lines = olefy_line.split('\n')
     for line in header_lines:
         if line == 'OLEFY/1.0':
             olefy_headers['olefy'] = line
@@ -121,7 +121,7 @@ def oletools( stream, tmp_file_name, lid ):
             os.remove(tmp_file_name)
 
     logger.debug('{} response: {}'.format(lid, out.decode()))
-    return out
+    return out + b'\t\n\n\t'
 
 # Asyncio data handling, default AIO-Functions
 class AIO(asyncio.Protocol):
@@ -143,11 +143,13 @@ class AIO(asyncio.Protocol):
     def eof_received(self):
         peer = self.transport.get_extra_info('peername')
         olefy_protocol_err = False
-        proto_ck = str(self.extra[0:2000])
-        if olefy_protocol in proto_ck:
-            olefy_line = proto_ck[12:proto_ck.find(olefy_protocol_sep)]
-            self.extra = bytearray(self.extra[59:len(self.extra)])
-            protocol_split(olefy_line)
+        proto_ck = self.extra[0:2000].decode('utf-8', 'ignore')
+
+        headers = proto_ck[0:proto_ck.find(olefy_protocol_sep)]
+
+        if olefy_protocol == headers[0:5]:
+            self.extra = bytearray(self.extra[len(headers)+2:len(self.extra)])
+            protocol_split(headers)
         else:
             olefy_protocol_err = True
 
@@ -169,7 +171,6 @@ class AIO(asyncio.Protocol):
             out = b'[ { "error": "Protocol error: Method header not found" } ]'
 
         self.transport.write(out)
-        self.transport.write(b'\t\n\n\t')
         logger.info('{} {} response send: {!r}'.format(lid, peer, out))
         self.transport.close()
 
