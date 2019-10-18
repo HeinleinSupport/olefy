@@ -67,6 +67,12 @@ Have a look to the commented olefy.conf. Set OLEFY_LOGLVL to 10 to see all detai
 
 Set `OLEFY_LOGLVL=10` and have a look to the logs `journalctl -u olefy`
 
+# Monitoring
+
+You can monitor the olefy service is working with sending just a PING to the service. olefy will return with PONG
+
+`echo PING | nc -q1 127.0.0.1 10050`
+
 # License
 
 Apache-2.0

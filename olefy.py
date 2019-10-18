@@ -148,10 +148,7 @@ class AIO(asyncio.Protocol):
 
         headers = proto_ck[0:proto_ck.find(olefy_protocol_sep)]
 
-        if olefy_ping == headers[0:4]:
-            logger.info('{} PING request'.format(peer))
-            out = b'PONG'
-        elif olefy_protocol == headers[0:5]:
+        if olefy_protocol == headers[0:5]:
             self.extra = bytearray(self.extra[len(headers)+2:len(self.extra)])
             protocol_split(headers)
         else:
@@ -164,7 +161,10 @@ class AIO(asyncio.Protocol):
 
         logger.info('{} {} bytes (stream size)'.format(lid, self.extra.__len__()))
 
-        if olefy_protocol_err == True or olefy_headers['olefy'] != 'OLEFY/1.0':
+        if olefy_ping == headers[0:4]:
+            logger.info('{} PING request'.format(peer))
+            out = b'PONG'
+        elif olefy_protocol_err == True or olefy_headers['olefy'] != 'OLEFY/1.0':
             logger.error('{} Protocol ERROR: no OLEFY/1.0 found'.format(lid))
             out = b'[ { "error": "Protocol error" } ]'
         elif 'Method' in olefy_headers:
