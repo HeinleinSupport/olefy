@@ -46,6 +46,7 @@ olefy_del_tmp_failed = int(os.getenv('OLEFY_DEL_TMP_FAILED', 1))
 # internal used variables
 request_time = '0000000000.000000'
 olefy_protocol = 'OLEFY'
+olefy_ping = 'PING'
 olefy_protocol_sep = '\n\n'
 olefy_headers = {}
 
@@ -147,7 +148,10 @@ class AIO(asyncio.Protocol):
 
         headers = proto_ck[0:proto_ck.find(olefy_protocol_sep)]
 
-        if olefy_protocol == headers[0:5]:
+        if olefy_ping == headers[0:4]:
+            logger.info('{} PING request'.format(peer))
+            out = b'PONG'
+        elif olefy_protocol == headers[0:5]:
             self.extra = bytearray(self.extra[len(headers)+2:len(self.extra)])
             protocol_split(headers)
         else:
