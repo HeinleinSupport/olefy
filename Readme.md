@@ -59,6 +59,10 @@ Only olefy depends on Python3 because we are using AsyncIO. If you like you can 
 
 Also you could start olefy.py standalone. Just edit the file directly and start it using the python3 interpreter.
 
+# RPM Installation
+
+The olefy service, its dependencies and basic configuration are installable on the CentOS 7 and NethServer 7 platforms from an RPM provided by the NethServer project at this URL: https://github.com/NethServer/olefy/releases
+
 # Settings
 
 Have a look to the commented olefy.conf. Set OLEFY_LOGLVL to 10 to see all details including the Rspamd scanning id.
