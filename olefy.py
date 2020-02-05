@@ -101,18 +101,18 @@ def oletools( stream, tmp_file_name, lid ):
         # do the olefy
         cmd_tmp = Popen([olefy_python_path, olefy_olevba_path, '-a', '-j' , '-l', 'error', tmp_file_name], stdout=PIPE, stderr=PIPE)
         out, err = cmd_tmp.communicate()
-        out = bytes(out.decode("ascii").replace('  ', ' ').replace('\t', '').replace('\n', ''), encoding="ascii")
+        out = bytes(out.decode('utf-8', 'ignore').replace('  ', ' ').replace('\t', '').replace('\n', ''), encoding="utf-8")
         failed = False
         if out.__len__() < 30:
-            logger.error('{} olevba returned <10 chars - rc: {!r}, response: {!r}'.format(lid,cmd_tmp.returncode, out.decode('ascii')))
+            logger.error('{} olevba returned <10 chars - rc: {!r}, response: {!r}'.format(lid,cmd_tmp.returncode, out.decode('utf-8', 'ignore')))
             out = b'[ { "error": "Unhandled error - too short olevba response" } ]'
             failed = True
         elif err.__len__() > 10 and cmd_tmp.returncode > 9:
-            logger.error('{} olevba stderr >10 chars - rc: {!r}, response: {!r}'.format(lid, cmd_tmp.returncode, err.decode('ascii')))
+            logger.error('{} olevba stderr >10 chars - rc: {!r}, response: {!r}'.format(lid, cmd_tmp.returncode, err.decode('utf-8', 'ignore')))
             out = b'[ { "error": "Unhandled oletools error" } ]'
             failed = True
         elif cmd_tmp.returncode != 0:
-            logger.error('{} olevba exited with code {!r}; err: {!r}'.format(lid, cmd_tmp.returncode, err.decode('ascii')))
+            logger.error('{} olevba exited with code {!r}; err: {!r}'.format(lid, cmd_tmp.returncode, err.decode('utf-8', 'ignore')))
             failed = True
 
         if failed and olefy_del_tmp_failed == 0:
@@ -121,7 +121,7 @@ def oletools( stream, tmp_file_name, lid ):
             logger.debug('{} {} deleting tmp file'.format(lid, tmp_file_name))
             os.remove(tmp_file_name)
 
-    logger.debug('{} response: {}'.format(lid, out.decode()))
+    logger.debug('{} response: {}'.format(lid, out.decode('utf-8', 'ignore')))
     return out + b'\t\n\n\t'
 
 # Asyncio data handling, default AIO-Functions
