@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# Copyright (c) 2019, Dennis Kalbhen <d.kalbhen@heinlein-support.de>
-# Copyright (c) 2019, Carsten Rosenberg <c.rosenberg@heinlein-support.de>
+# Copyright (c) 2020, Dennis Kalbhen <d.kalbhen@heinlein-support.de>
+# Copyright (c) 2020, Carsten Rosenberg <c.rosenberg@heinlein-support.de>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -30,9 +30,10 @@ import logging
 import asyncio
 import time
 import magic
+import re
 
 # merge variables from /etc/olefy.conf and the defaults
-olefy_listen_addr = os.getenv('OLEFY_BINDADDRESS', '127.0.0.1')
+olefy_listen_addr_string = os.getenv('OLEFY_BINDADDRESS', '127.0.0.1,::1')
 olefy_listen_port = int(os.getenv('OLEFY_BINDPORT', '10050'))
 olefy_tmp_dir = os.getenv('OLEFY_TMPDIR', '/tmp')
 olefy_python_path = os.getenv('OLEFY_PYTHON_PATH', '/usr/bin/python3')
@@ -54,8 +55,16 @@ olefy_headers = {}
 logger = logging.getLogger('olefy')
 logging.basicConfig(stream=sys.stdout, level=olefy_loglvl, format='olefy %(levelname)s %(funcName)s %(message)s')
 
+logger.debug('olefy listen address string: {} (type {})'.format(olefy_listen_addr_string, type(olefy_listen_addr_string)))
+
+if not olefy_listen_addr_string:
+    olefy_listen_addr = ""
+else:
+    addr_re = re.compile('[\[" \]]')
+    olefy_listen_addr = addr_re.sub('', olefy_listen_addr_string.replace("'", "")).split(',')
+
 # log runtime variables
-logger.info('olefy listen address: {}'.format(olefy_listen_addr))
+logger.info('olefy listen address: {} (type: {})'.format(olefy_listen_addr, type(olefy_listen_addr)))
 logger.info('olefy listen port: {}'.format(olefy_listen_port))
 logger.info('olefy tmp dir: {}'.format(olefy_tmp_dir))
 logger.info('olefy python path: {}'.format(olefy_python_path))
@@ -184,7 +193,8 @@ loop = asyncio.get_event_loop()
 # each client connection will create a new protocol instance
 coro = loop.create_server(AIO, olefy_listen_addr, olefy_listen_port)
 server = loop.run_until_complete(coro)
-logger.info('serving on {}'.format(server.sockets[0].getsockname()))
+for sockets in server.sockets:
+    logger.info('serving on {}'.format(sockets.getsockname()))
 
 # XXX serve requests until KeyboardInterrupt, not needed for production
 try:
