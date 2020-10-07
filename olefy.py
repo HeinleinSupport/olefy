@@ -173,7 +173,7 @@ class AIO(asyncio.Protocol):
         else:
             is_ping = False
 
-        if not is_ping or olefy_loglvl = 10:
+        if not is_ping or olefy_loglvl == 10:
             logger.info('{} {} bytes (stream size)'.format(lid, self.extra.__len__()))
 
         if olefy_ping == headers[0:4]:
@@ -190,7 +190,7 @@ class AIO(asyncio.Protocol):
             out = b'[ { "error": "Protocol error: Method header not found" } ]'
 
         self.transport.write(out)
-        if not is_ping or olefy_loglvl = 10:
+        if not is_ping or olefy_loglvl == 10:
             logger.info('{} {} response send: {!r}'.format(lid, peer, out))
         self.transport.close()
 
