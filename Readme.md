@@ -5,11 +5,15 @@ Small Python Daemon to use oletools over TCP sockets. Mainly to use oletools in 
 Rspamd oletools plugin documentation: [Rspamd External Services - Oletools](https://rspamd.com/doc/modules/external_services.html#oletools-specific-details)
 
 Some extra details you can find here in German language:
+
 [Emotet mit Rspamd und Oletools bekämpfen](https://www.heinlein-support.de/blog/news/emotet-mit-rspamd-und-oletools-bekaempfen/)
+
 [Emotet mit Rspamd und Oletools bekämpfen (Teil 2)](https://www.heinlein-support.de/blog/news/emotet-mit-rspamd-und-oletools-bekaempfen-teil-2/)
 
 Or google translated here:
+
 [Fight Emotet with Rspamd and Oletools](https://translate.google.com/translate?hl=en&sl=de&tl=en&u=https%3A%2F%2Fwww.heinlein-support.de%2Fblog%2Fnews%2Femotet-mit-rspamd-und-oletools-bekaempfen%2F)
+
 [Fighting Emotet with Rspamd and Oletools (Part 2)](https://translate.google.com/translate?hl=en&sl=de&tl=en&u=https%3A%2F%2Fwww.heinlein-support.de%2Fblog%2Fnews%2Femotet-mit-rspamd-und-oletools-bekaempfen-teil-2%2F)
 
 ## State of Development
