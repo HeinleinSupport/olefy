@@ -116,6 +116,10 @@ def oletools( stream, tmp_file_name, lid ):
             logger.error('{} olevba returned <10 chars - rc: {!r}, response: {!r}'.format(lid,cmd_tmp.returncode, out.decode('utf-8', 'ignore')))
             out = b'[ { "error": "Unhandled error - too short olevba response" } ]'
             failed = True
+        elif err.__len__() > 10 and cmd_tmp.returncode == 9:
+            logger.error("{} olevba stderr >10 chars - rc: {!r}, response: {!r}".format(lid, cmd_tmp.returncode, err.decode("utf-8", "ignore")))
+            out = b'[ { "error": "Decrypt failed" } ]'
+            failed = True
         elif err.__len__() > 10 and cmd_tmp.returncode > 9:
             logger.error('{} olevba stderr >10 chars - rc: {!r}, response: {!r}'.format(lid, cmd_tmp.returncode, err.decode('utf-8', 'ignore')))
             out = b'[ { "error": "Unhandled oletools error" } ]'
