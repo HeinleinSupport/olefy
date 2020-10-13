@@ -2,6 +2,16 @@
 
 Small Python Daemon to use oletools over TCP sockets. Mainly to use oletools in [Rspamd](https://github.com/rspamd/rspamd).
 
+Rspamd oletools plugin documentation: [Rspamd External Services - Oletools](https://rspamd.com/doc/modules/external_services.html#oletools-specific-details)
+
+Some extra details you can find here in German language:
+[Emotet mit Rspamd und Oletools bekämpfen](https://www.heinlein-support.de/blog/news/emotet-mit-rspamd-und-oletools-bekaempfen/)
+[Emotet mit Rspamd und Oletools bekämpfen (Teil 2)](https://www.heinlein-support.de/blog/news/emotet-mit-rspamd-und-oletools-bekaempfen-teil-2/)
+
+Or google translated here:
+[Fight Emotet with Rspamd and Oletools](https://translate.google.com/translate?hl=en&sl=de&tl=en&u=https%3A%2F%2Fwww.heinlein-support.de%2Fblog%2Fnews%2Femotet-mit-rspamd-und-oletools-bekaempfen%2F)
+[Fighting Emotet with Rspamd and Oletools (Part 2)](https://translate.google.com/translate?hl=en&sl=de&tl=en&u=https%3A%2F%2Fwww.heinlein-support.de%2Fblog%2Fnews%2Femotet-mit-rspamd-und-oletools-bekaempfen-teil-2%2F)
+
 ## State of Development
 
 This Daemon is production tested but maybe not bug free. Feel free to test and
@@ -14,17 +24,16 @@ the stream into a tmp file, calls olevba3 and returns the scan result as json.
 
 ## Future plans
 
-Debug some issues and use oletools directly in olefy and scan inline.
-Also olefy should rescan with rtfobj when olevba reports a RTF file.
-
-As the protocol is flexible we will integrate other tools and services as needed.
-(Pyzor will be next)
+We realized our current approach is not flexible enough and future proof to add more features here.
+We will create a more generic tool using generic protocols.
 
 ## oletools
 
 [github: oletools - python tools to analyze MS OLE2 files](https://github.com/decalage2/oletools)
 
 [http://www.decalage.info/python/oletools](http://www.decalage.info/python/oletools)
+
+**As spammers are creating macro viruses which are trying to trick the current oletools release into errors, we have created a little fork to add some cherry-picked patches and negotiate some errors faster than the oletools release cycle. Maybe have a look: [oletools - patched by Heinlein](https://github.com/HeinleinSupport/oletools)**
 
 oletools is a package of python tools to analyze Microsoft OLE2 files (also called Structured Storage, Compound File Binary Format or Compound Document File Format), such as Microsoft Office documents or Outlook messages, mainly for malware analysis, forensics and debugging. It is based on the olefile parser. See [http://www.decalage.info/python/oletools](http://www.decalage.info/python/oletools) for more info.
 
