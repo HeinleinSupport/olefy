@@ -168,10 +168,16 @@ class AIO(asyncio.Protocol):
         tmp_file_name = olefy_tmp_dir+'/'+request_time+'.'+str(peer[1])
         logger.debug('{} {} choosen as tmp filename'.format(lid, tmp_file_name))
 
-        logger.info('{} {} bytes (stream size)'.format(lid, self.extra.__len__()))
+        if olefy_ping == headers[0:4]:
+            is_ping = True
+        else:
+            is_ping = False
+
+        if not is_ping or olefy_loglvl == 10:
+            logger.info('{} {} bytes (stream size)'.format(lid, self.extra.__len__()))
 
         if olefy_ping == headers[0:4]:
-            logger.info('{} PING request'.format(peer))
+            logger.debug('{} PING request'.format(peer))
             out = b'PONG'
         elif olefy_protocol_err == True or olefy_headers['olefy'] != 'OLEFY/1.0':
             logger.error('{} Protocol ERROR: no OLEFY/1.0 found'.format(lid))
@@ -184,7 +190,8 @@ class AIO(asyncio.Protocol):
             out = b'[ { "error": "Protocol error: Method header not found" } ]'
 
         self.transport.write(out)
-        logger.info('{} {} response send: {!r}'.format(lid, peer, out))
+        if not is_ping or olefy_loglvl == 10:
+            logger.info('{} {} response send: {!r}'.format(lid, peer, out))
         self.transport.close()
 
 
