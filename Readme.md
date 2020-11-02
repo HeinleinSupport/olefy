@@ -37,13 +37,14 @@ We will create a more generic tool using generic protocols.
 
 [http://www.decalage.info/python/oletools](http://www.decalage.info/python/oletools)
 
-**As spammers are creating macro viruses which are trying to trick the current oletools release into errors, we have created a little fork to add some cherry-picked patches and negotiate some errors faster than the oletools release cycle. Maybe have a look: [oletools - patched by Heinlein](https://github.com/HeinleinSupport/oletools)**
+**As spammers are creating macro viruses which are trying to trick the current oletools releases into errors, we have created a little fork to add some cherry-picked patches and negotiate some errors faster than the oletools release cycle. Maybe have a look: [oletools - patched by Heinlein](https://github.com/HeinleinSupport/oletools)**
 
 oletools is a package of python tools to analyze Microsoft OLE2 files (also called Structured Storage, Compound File Binary Format or Compound Document File Format), such as Microsoft Office documents or Outlook messages, mainly for malware analysis, forensics and debugging. It is based on the olefile parser. See [http://www.decalage.info/python/oletools](http://www.decalage.info/python/oletools) for more info.
 
 # Default Installation
 
-Python3 >= 3.4 is required for olefy
+Python3 >= 3.6 is required for olefy.
+Also oletools itself and some requirements will need Python3 >= 3.6 in near future.
 
 ## Install Python3 oletools and python-magic
 
