@@ -113,7 +113,8 @@ def oletools( stream, tmp_file_name, lid ):
         out = bytes(out.decode('utf-8', 'ignore').replace('  ', ' ').replace('\t', '').replace('\n', ''), encoding="utf-8")
         failed = False
         if out.__len__() < 30:
-            logger.error('{} olevba returned <10 chars - rc: {!r}, response: {!r}'.format(lid,cmd_tmp.returncode, out.decode('utf-8', 'ignore')))
+            logger.error('{} olevba returned <30 chars - rc: {!r}, response: {!r}, error: {!r}'.format(lid,cmd_tmp.returncode, 
+                out.decode('utf-8', 'ignore'), err.decode('utf-8', 'ignore')))
             out = b'[ { "error": "Unhandled error - too short olevba response" } ]'
             failed = True
         elif err.__len__() > 10 and cmd_tmp.returncode == 9:
