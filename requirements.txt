@@ -1,0 +1,3 @@
+colorclass
+python-magic
+oletools
