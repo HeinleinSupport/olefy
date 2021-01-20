@@ -10,11 +10,19 @@ Some extra details you can find here in German language:
 
 [Emotet mit Rspamd und Oletools bekämpfen (Teil 2)](https://www.heinlein-support.de/blog/news/emotet-mit-rspamd-und-oletools-bekaempfen-teil-2/)
 
+[Emotet mit Rspamd und Oletools bekämpfen – Emotet 2020 (Teil 3)](https://www.heinlein-support.de/blog/news/emotet-mit-rspamd-und-oletools-bekaempfen-emotet-2020-teil-3/)
+
+[Emotet mit Rspamd und Oletools bekämpfen – die vielen kleinen Tricks (Teil 4)](https://www.heinlein-support.de/blog/news/emotet-mit-rspamd-und-oletools-bekaempfen-die-vielen-kleinen-tricks-teil-4/)
+
 Or google translated here:
 
 [Fight Emotet with Rspamd and Oletools](https://translate.google.com/translate?hl=en&sl=de&tl=en&u=https%3A%2F%2Fwww.heinlein-support.de%2Fblog%2Fnews%2Femotet-mit-rspamd-und-oletools-bekaempfen%2F)
 
 [Fighting Emotet with Rspamd and Oletools (Part 2)](https://translate.google.com/translate?hl=en&sl=de&tl=en&u=https%3A%2F%2Fwww.heinlein-support.de%2Fblog%2Fnews%2Femotet-mit-rspamd-und-oletools-bekaempfen-teil-2%2F)
+
+[Fight Emotet with Rspamd and Oletools - Emotet 2020 (Part 3)](https://translate.google.com/translate?hl=en&sl=de&tl=en&u=https://www.heinlein-support.de/blog/news/emotet-mit-rspamd-und-oletools-bekaempfen-emotet-2020-teil-3/)
+
+[Fighting Emotet with Rspamd and Oletools - the many little tricks (part 4)](https://translate.google.com/translate?hl=en&sl=de&tl=en&u=https://www.heinlein-support.de/blog/news/emotet-mit-rspamd-und-oletools-bekaempfen-die-vielen-kleinen-tricks-teil-4/)
 
 ## State of Development
 
