@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 # ping.sh
 # Used in kubernetes to check health from olefy
