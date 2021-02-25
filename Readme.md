@@ -95,7 +95,7 @@ It can then be used like so:
 docker run --rm -d -p 10050:10050 myimage
 ```
 
-Environment variables listed in [olefy.conf](olefy.conf) are supported. For instances:
+Environment variables listed in [olefy.conf](olefy.conf) are supported. For instance:
 
 ```bash
 docker run --rm -d -e OLEFY_BINDPORT=1234 -p 10050:1234 myimage
