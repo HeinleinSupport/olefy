@@ -1,0 +1,31 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: olefy
+  name: olefy
+spec:
+  containers:
+  - name: olefy
+    image: devopsworks/olefy
+    livenessProbe:
+      exec:
+        command:
+        - olefy_ping.sh
+        # the following is also possible
+        # - sh
+        # - -c
+        # - >-
+        #    echo -ne "PING\n\n" |
+        #      nc -N 127.0.0.1 10050 |
+        #      grep PONG > /dev/null
+      initialDelaySeconds: 5
+      periodSeconds: 5
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
