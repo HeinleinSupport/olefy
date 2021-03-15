@@ -4,25 +4,13 @@ Small Python Daemon to use oletools over TCP sockets. Mainly to use oletools in 
 
 Rspamd oletools plugin documentation: [Rspamd External Services - Oletools](https://rspamd.com/doc/modules/external_services.html#oletools-specific-details)
 
-Some extra details you can find here in German language:
+Some extra details you can find in our blog series in German language here:
 
 [Emotet mit Rspamd und Oletools bekämpfen](https://www.heinlein-support.de/blog/news/emotet-mit-rspamd-und-oletools-bekaempfen/)
 
-[Emotet mit Rspamd und Oletools bekämpfen (Teil 2)](https://www.heinlein-support.de/blog/news/emotet-mit-rspamd-und-oletools-bekaempfen-teil-2/)
-
-[Emotet mit Rspamd und Oletools bekämpfen – Emotet 2020 (Teil 3)](https://www.heinlein-support.de/blog/news/emotet-mit-rspamd-und-oletools-bekaempfen-emotet-2020-teil-3/)
-
-[Emotet mit Rspamd und Oletools bekämpfen – die vielen kleinen Tricks (Teil 4)](https://www.heinlein-support.de/blog/news/emotet-mit-rspamd-und-oletools-bekaempfen-die-vielen-kleinen-tricks-teil-4/)
-
 Or google translated here:
 
-[Fight Emotet with Rspamd and Oletools](https://translate.google.com/translate?hl=en&sl=de&tl=en&u=https%3A%2F%2Fwww.heinlein-support.de%2Fblog%2Fnews%2Femotet-mit-rspamd-und-oletools-bekaempfen%2F)
-
-[Fighting Emotet with Rspamd and Oletools (Part 2)](https://translate.google.com/translate?hl=en&sl=de&tl=en&u=https%3A%2F%2Fwww.heinlein-support.de%2Fblog%2Fnews%2Femotet-mit-rspamd-und-oletools-bekaempfen-teil-2%2F)
-
-[Fight Emotet with Rspamd and Oletools - Emotet 2020 (Part 3)](https://translate.google.com/translate?hl=en&sl=de&tl=en&u=https://www.heinlein-support.de/blog/news/emotet-mit-rspamd-und-oletools-bekaempfen-emotet-2020-teil-3/)
-
-[Fighting Emotet with Rspamd and Oletools - the many little tricks (part 4)](https://translate.google.com/translate?hl=en&sl=de&tl=en&u=https://www.heinlein-support.de/blog/news/emotet-mit-rspamd-und-oletools-bekaempfen-die-vielen-kleinen-tricks-teil-4/)
+[Fight Emotet with Rspamd and Oletools](https://abnl72qcztj7u5v74mr6e3apiy--www-heinlein-support-de.translate.goog/blog/news/emotet-mit-rspamd-und-oletools-bekaempfen/)
 
 ## State of Development
 
@@ -38,6 +26,8 @@ the stream into a tmp file, calls olevba3 and returns the scan result as json.
 
 We realized our current approach is not flexible enough and future proof to add more features here.
 We will create a more generic tool using generic protocols.
+
+[BEYOND EMOTET – NEXT GENERATION OPEN SOURCE E-MAIL ANALYSIS (CLT 2021)](https://www.heinlein-support.de/sites/default/files/CLT2021-Beyond-Emotet.pdf)
 
 ## oletools
 
