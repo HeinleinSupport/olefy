@@ -71,6 +71,28 @@ Only olefy depends on Python3 because we are using AsyncIO. If you like you can 
 
 Also you could start olefy.py standalone. Just edit the file directly and start it using the python3 interpreter.
 
+# Docker and Kubernetes usage
+
+Docker container can be built using the following commands:
+
+```bash
+docker build -f docker/Dockerfile -t myimage .
+```
+
+It can then be used like so:
+
+```bash
+docker run --rm -d -p 10050:10050 myimage
+```
+
+Environment variables listed in [olefy.conf](olefy.conf) are supported. For instance:
+
+```bash
+docker run --rm -d -e OLEFY_BINDPORT=1234 -p 10050:1234 myimage
+```
+
+A sample [Kubernetes manifest](docker/sample-manifest.yaml) is also provided.
+
 # Settings
 
 Have a look to the commented olefy.conf. Set OLEFY_LOGLVL to 10 to see all details including the Rspamd scanning id.
