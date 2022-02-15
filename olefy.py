@@ -168,16 +168,14 @@ class AIO(asyncio.Protocol):
         else:
             olefy_protocol_err = True
 
-        rspamd_id = olefy_headers['Rspamd-ID'][:6] or ''
-        lid = 'Rspamd-ID' in olefy_headers and '<'+rspamd_id+'>'
-
-        tmp_file_name = olefy_tmp_dir+'/'+request_time+'.'+str(peer[1])+'.'+rspamd_id
-        logger.debug('{} {} choosen as tmp filename'.format(lid, tmp_file_name))
-
         if olefy_ping == headers[0:4]:
             is_ping = True
         else:
             is_ping = False
+            rspamd_id = olefy_headers['Rspamd-ID'][:6] or ''
+            lid = 'Rspamd-ID' in olefy_headers and '<'+rspamd_id+'>'
+            tmp_file_name = olefy_tmp_dir+'/'+request_time+'.'+str(peer[1])+'.'+rspamd_id
+            logger.debug('{} {} choosen as tmp filename'.format(lid, tmp_file_name))
 
         if not is_ping or olefy_loglvl == 10:
             logger.info('{} {} bytes (stream size)'.format(lid, self.extra.__len__()))
