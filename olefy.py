@@ -158,6 +158,8 @@ class AIO(asyncio.Protocol):
     def eof_received(self):
         peer = self.transport.get_extra_info('peername')
         olefy_protocol_err = False
+	lid = 'No Rspamd-ID'
+	is_ping = False
         proto_ck = self.extra[0:2000].decode('utf-8', 'ignore')
 
         headers = proto_ck[0:proto_ck.find(olefy_protocol_sep)]
@@ -170,8 +172,7 @@ class AIO(asyncio.Protocol):
 
         if olefy_ping == headers[0:4]:
             is_ping = True
-        else:
-            is_ping = False
+        elif olefy_protocol_err == False:
             rspamd_id = olefy_headers['Rspamd-ID'][:6] or ''
             lid = 'Rspamd-ID' in olefy_headers and '<'+rspamd_id+'>'
             tmp_file_name = olefy_tmp_dir+'/'+request_time+'.'+str(peer[1])+'.'+rspamd_id
