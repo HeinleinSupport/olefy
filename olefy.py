@@ -158,8 +158,8 @@ class AIO(asyncio.Protocol):
     def eof_received(self):
         peer = self.transport.get_extra_info('peername')
         olefy_protocol_err = False
-	lid = 'No Rspamd-ID'
-	is_ping = False
+        lid = 'No Rspamd-ID'
+        is_ping = False
         proto_ck = self.extra[0:2000].decode('utf-8', 'ignore')
 
         headers = proto_ck[0:proto_ck.find(olefy_protocol_sep)]
