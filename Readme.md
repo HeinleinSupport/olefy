@@ -47,7 +47,7 @@ Also oletools itself and some requirements will need Python3 >= 3.6 in near futu
 ## Install Python3 oletools, python-magic and defusedxml
 
 -   use pip3, apt, yum, zypper or the source to install the Python3 version of oletools
--   for python-magic use `pip3 install python-magic defusedxml` or be aware using a packet containing this project: [https://github.com/ahupp/python-magic](https://github.com/ahupp/python-magic). E.g. the Debian [python3-magic](https://packages.debian.org/stretch/python3-magic) is *NOT* working
+-   for python-magic use `pip3 install python-magic defusedxml` or be aware using a packet containing this project: [https://github.com/ahupp/python-magic](https://github.com/ahupp/python-magic). E.g. the Debian Stretch [python3-magic](https://packages.debian.org/stretch/python3-magic) is *NOT* working
 
 ## Install olefy
 
