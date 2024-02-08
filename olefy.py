@@ -60,7 +60,7 @@ logger.debug('olefy listen address string: {} (type {})'.format(olefy_listen_add
 if not olefy_listen_addr_string:
     olefy_listen_addr = ""
 else:
-    addr_re = re.compile('[\[" \]]')
+    addr_re = re.compile('[]" []')
     olefy_listen_addr = addr_re.sub('', olefy_listen_addr_string.replace("'", "")).split(',')
 
 # log runtime variables
@@ -201,7 +201,14 @@ class AIO(asyncio.Protocol):
 
 
 # start the listeners
-loop = asyncio.get_event_loop()
+if sys.version_info < (3, 10):
+    loop = asyncio.get_event_loop()
+else:
+    try:
+        loop = asyncio.get_running_loop()
+    except RuntimeError:
+        loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
 # each client connection will create a new protocol instance
 coro = loop.create_server(AIO, olefy_listen_addr, olefy_listen_port)
 server = loop.run_until_complete(coro)
