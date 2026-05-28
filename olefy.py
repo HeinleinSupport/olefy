@@ -45,11 +45,9 @@ olefy_del_tmp = int(os.getenv('OLEFY_DEL_TMP', 1))
 olefy_del_tmp_failed = int(os.getenv('OLEFY_DEL_TMP_FAILED', 1))
 
 # internal used variables
-request_time = '0000000000.000000'
 olefy_protocol = 'OLEFY'
 olefy_ping = 'PING'
 olefy_protocol_sep = '\n\n'
-olefy_headers = {}
 
 # init logging
 logger = logging.getLogger('olefy')
@@ -82,21 +80,23 @@ if not os.path.isfile(olefy_olevba_path):
     exit(1)
 
 # olefy protocol function
-def protocol_split( olefy_line ):
+def protocol_split(olefy_line):
+    headers = {}
     header_lines = olefy_line.split('\n')
     for line in header_lines:
         if line == 'OLEFY/1.0':
-            olefy_headers['olefy'] = line
+            headers['olefy'] = line
         elif line != '':
-            kv = line.split(': ')
-            if kv[0] != '' and kv[1] != '':
-                olefy_headers[kv[0]] = kv[1]
-    logger.debug('olefy_headers: {}'.format(olefy_headers))
+            kv = line.split(': ', 1)
+            if len(kv) == 2 and kv[0] != '' and kv[1] != '':
+                headers[kv[0]] = kv[1]
+    logger.debug('olefy_headers: {}'.format(headers))
+    return headers
 
 # calling oletools
 def oletools( stream, tmp_file_name, lid ):
-    if olefy_min_length > stream.__len__():
-        logger.error('{} {} bytes (Not Scanning! File smaller than {!r})'.format(lid, stream.__len__(), olefy_min_length))
+    if olefy_min_length > len(stream):
+        logger.error('{} {} bytes (Not Scanning! File smaller than {!r})'.format(lid, len(stream), olefy_min_length))
         out = b'[ { "error": "File too small" } ]'
     else:
         tmp_file = open(tmp_file_name, 'wb')
@@ -112,16 +112,16 @@ def oletools( stream, tmp_file_name, lid ):
         out, err = cmd_tmp.communicate()
         out = bytes(out.decode('utf-8', 'ignore').replace('  ', ' ').replace('\t', '').replace('\n', '').replace('XLMMacroDeobfuscator: pywin32 is not installed (only is required if you want to use MS Excel)', ''), encoding="utf-8")
         failed = False
-        if out.__len__() < 30:
+        if len(out) < 30:
             logger.error('{} olevba returned <30 chars - rc: {!r}, response: {!r}, error: {!r}'.format(lid,cmd_tmp.returncode, 
                 out.decode('utf-8', 'ignore'), err.decode('utf-8', 'ignore')))
             out = b'[ { "error": "Unhandled error - too short olevba response" } ]'
             failed = True
-        elif err.__len__() > 10 and cmd_tmp.returncode == 9:
+        elif len(err) > 10 and cmd_tmp.returncode == 9:
             logger.error("{} olevba stderr >10 chars - rc: {!r}, response: {!r}".format(lid, cmd_tmp.returncode, err.decode("utf-8", "ignore")))
             out = b'[ { "error": "Decrypt failed" } ]'
             failed = True
-        elif err.__len__() > 10 and cmd_tmp.returncode > 9:
+        elif len(err) > 10 and cmd_tmp.returncode > 9:
             logger.error('{} olevba stderr >10 chars - rc: {!r}, response: {!r}'.format(lid, cmd_tmp.returncode, err.decode('utf-8', 'ignore')))
             out = b'[ { "error": "Unhandled oletools error" } ]'
             failed = True
@@ -144,11 +144,10 @@ class AIO(asyncio.Protocol):
         self.extra = bytearray()
 
     def connection_made(self, transport):
-        global request_time
         peer = transport.get_extra_info('peername')
         logger.debug('{} new connection was made'.format(peer))
         self.transport = transport
-        request_time = str(time.time())
+        self.request_time = str(time.time())
 
     def data_received(self, request, msgid=1):
         peer = self.transport.get_extra_info('peername')
@@ -160,36 +159,41 @@ class AIO(asyncio.Protocol):
         olefy_protocol_err = False
         lid = 'No Rspamd-ID'
         is_ping = False
+        tmp_file_name = None
         proto_ck = self.extra[0:2000].decode('utf-8', 'ignore')
 
         headers = proto_ck[0:proto_ck.find(olefy_protocol_sep)]
 
         if olefy_protocol == headers[0:5]:
             self.extra = bytearray(self.extra[len(headers)+2:len(self.extra)])
-            protocol_split(headers)
+            olefy_headers = protocol_split(headers)
         else:
             olefy_protocol_err = True
+            olefy_headers = {}
 
         if olefy_ping == headers[0:4]:
             is_ping = True
-        elif olefy_protocol_err == False:
-            rspamd_id = olefy_headers['Rspamd-ID'][:6] or ''
-            lid = 'Rspamd-ID' in olefy_headers and '<'+rspamd_id+'>'
-            tmp_file_name = olefy_tmp_dir+'/'+request_time+'.'+str(peer[1])+'.'+rspamd_id
+        elif not olefy_protocol_err:
+            rspamd_id = re.sub(r'[^a-zA-Z0-9_-]', '', olefy_headers.get('Rspamd-ID', '')[:6])
+            lid = '<' + rspamd_id + '>' if rspamd_id else 'No Rspamd-ID'
+            tmp_file_name = olefy_tmp_dir+'/'+self.request_time+'.'+str(peer[1])+'.'+rspamd_id
             logger.debug('{} {} choosen as tmp filename'.format(lid, tmp_file_name))
 
         if not is_ping or olefy_loglvl == 10:
-            logger.info('{} {} bytes (stream size)'.format(lid, self.extra.__len__()))
+            logger.info('{} {} bytes (stream size)'.format(lid, len(self.extra)))
 
         if olefy_ping == headers[0:4]:
             logger.debug('{} PING request'.format(peer))
             out = b'PONG'
-        elif olefy_protocol_err == True or olefy_headers['olefy'] != 'OLEFY/1.0':
+        elif olefy_protocol_err or olefy_headers.get('olefy') != 'OLEFY/1.0':
             logger.error('{} Protocol ERROR: no OLEFY/1.0 found'.format(lid))
             out = b'[ { "error": "Protocol error" } ]'
         elif 'Method' in olefy_headers:
             if olefy_headers['Method'] == 'oletools':
                 out = oletools(self.extra, tmp_file_name, lid)
+            else:
+                logger.error('{} Protocol ERROR: unknown Method {!r}'.format(lid, olefy_headers['Method']))
+                out = b'[ { "error": "Protocol error: unknown Method" } ]'
         else:
             logger.error('Protocol ERROR: Method header not found')
             out = b'[ { "error": "Protocol error: Method header not found" } ]'
@@ -201,21 +205,16 @@ class AIO(asyncio.Protocol):
 
 
 # start the listeners
-loop = asyncio.get_event_loop()
-# each client connection will create a new protocol instance
-coro = loop.create_server(AIO, olefy_listen_addr, olefy_listen_port)
-server = loop.run_until_complete(coro)
-for sockets in server.sockets:
-    logger.info('serving on {}'.format(sockets.getsockname()))
+async def main():
+    loop = asyncio.get_running_loop()
+    server = await loop.create_server(AIO, olefy_listen_addr, olefy_listen_port)
+    for sockets in server.sockets:
+        logger.info('serving on {}'.format(sockets.getsockname()))
+    async with server:
+        await server.serve_forever()
 
-# XXX serve requests until KeyboardInterrupt, not needed for production
 try:
-    loop.run_forever()
+    asyncio.run(main())
 except KeyboardInterrupt:
     pass
-
-# graceful shutdown/reload
-server.close()
-loop.run_until_complete(server.wait_closed())
-loop.close()
 logger.info('stopped serving')
